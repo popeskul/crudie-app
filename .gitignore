@@ -1,0 +1,5 @@
+.idea/
+.database/
+.dockerignore
+.env
+configs/config.yml
