@@ -1,0 +1,395 @@
+basePath: /api
+definitions:
+  models.House:
+    properties:
+      address:
+        type: string
+      created_at:
+        type: string
+      description:
+        type: string
+      id:
+        type: string
+      owner_id:
+        type: string
+    required:
+    - id
+    - owner_id
+    type: object
+  models.HouseCreateInput:
+    properties:
+      address:
+        type: string
+      description:
+        type: string
+    type: object
+  models.HouseDeleteInput:
+    properties:
+      id:
+        type: string
+    required:
+    - id
+    type: object
+  models.HouseUpdateInput:
+    properties:
+      address:
+        type: string
+      description:
+        type: string
+      id:
+        type: string
+      owner_id:
+        type: string
+    required:
+    - id
+    - owner_id
+    type: object
+  models.SignInInput:
+    properties:
+      email:
+        type: string
+      password:
+        maxLength: 30
+        type: string
+    type: object
+  models.SignUpInput:
+    properties:
+      email:
+        type: string
+      name:
+        maxLength: 30
+        type: string
+      password:
+        maxLength: 30
+        type: string
+    type: object
+  models.User:
+    properties:
+      created_at:
+        type: string
+      email:
+        type: string
+      id:
+        type: string
+      name:
+        maxLength: 30
+        type: string
+      password:
+        maxLength: 30
+        minLength: 3
+        type: string
+    required:
+    - email
+    - id
+    - password
+    type: object
+  models.UserCreateInput:
+    properties:
+      email:
+        type: string
+      name:
+        maxLength: 30
+        type: string
+      password:
+        maxLength: 30
+        minLength: 3
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  models.UserDeleteInput:
+    properties:
+      id:
+        type: string
+    required:
+    - id
+    type: object
+  models.UserUpdateInput:
+    properties:
+      email:
+        type: string
+      id:
+        type: string
+      name:
+        maxLength: 30
+        type: string
+      password:
+        maxLength: 30
+        type: string
+    required:
+    - id
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: This is an auto-generated API Docs.
+  title: Houser API
+  version: "1.0"
+paths:
+  /v1/house:
+    delete:
+      consumes:
+      - application/json
+      description: Delete house by given ID.
+      parameters:
+      - description: house id
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.HouseDeleteInput'
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: ok
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: delete house by given ID
+      tags:
+      - House
+    post:
+      consumes:
+      - application/json
+      description: Create a new house.
+      parameters:
+      - description: house info
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.HouseCreateInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.House'
+      security:
+      - ApiKeyAuth: []
+      summary: creates a new house
+      tags:
+      - House
+    put:
+      consumes:
+      - application/json
+      description: Update house.
+      parameters:
+      - description: house info
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.HouseUpdateInput'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: ok
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: update house
+      tags:
+      - House
+  /v1/house/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get house by given ID.
+      parameters:
+      - description: House ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.House'
+      summary: get house by given ID
+      tags:
+      - House
+  /v1/houses:
+    get:
+      consumes:
+      - application/json
+      description: Get all exists houses.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.House'
+            type: array
+      summary: gets all exists houses
+      tags:
+      - Houses
+  /v1/sign-in:
+    post:
+      consumes:
+      - application/json
+      description: SignIn to the system with the token.
+      parameters:
+      - description: user
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.SignInInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      summary: login and creates a new access token
+      tags:
+      - Auth
+  /v1/sign-up:
+    post:
+      consumes:
+      - application/json
+      description: SignUp to the system with the token.
+      parameters:
+      - description: user
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.SignUpInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      summary: signup and creates a new access token
+      tags:
+      - Auth
+  /v1/user:
+    delete:
+      consumes:
+      - application/json
+      description: Delete user by given ID.
+      parameters:
+      - description: user id
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserDeleteInput'
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: ok
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: delete user by given ID
+      tags:
+      - User
+    post:
+      consumes:
+      - application/json
+      description: Create a new user.
+      parameters:
+      - description: user info
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserCreateInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.User'
+      security:
+      - ApiKeyAuth: []
+      summary: creates a new user
+      tags:
+      - User
+    put:
+      consumes:
+      - application/json
+      description: Update user.
+      parameters:
+      - description: user info
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserUpdateInput'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: ok
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: update user
+      tags:
+      - User
+  /v1/user/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get user by given ID.
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.User'
+      summary: get user by given ID
+      tags:
+      - User
+  /v1/users:
+    get:
+      consumes:
+      - application/json
+      description: Get all exists users.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.User'
+            type: array
+      summary: gets all exists users
+      tags:
+      - Users
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

@@ -1,0 +1,23 @@
+version: "3.8"
+
+services:
+  houser:
+    build: .
+    command: ./scripts/wait-for-postgres.sh models ./houser
+    container_name: "houser"
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+    environment:
+      - DB_PASSWORD=qwerty
+
+  db:
+    restart: always
+    image: postgres:latest
+    volumes:
+      - ./.database/postgres/data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=123123
+    ports:
+      - 5436:5432
