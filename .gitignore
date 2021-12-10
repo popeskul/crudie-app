@@ -2,4 +2,5 @@
 .database/
 .dockerignore
 .env
+**/.DS_Store
 configs/config.yml
